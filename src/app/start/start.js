@@ -106,18 +106,8 @@ angular.module( 'ngBoilerplate.start', [
   };
 
   $scope.startTracking = function(id, name) {
-    apiService.startTracking(id).then(function(result) {
-      $scope.currentlyTracking = {};
-      $scope.currentlyTracking.categoryId = id;
-      $scope.currentlyTracking.id = result.id;
-      $scope.currentlyTracking.categoryName = name;
-      
-      //todo: refactor
-      // $scope.currentlyTrackingCategoryId = id;
-      // $scope.currentlyTrackingId = result.id;
-      // $scope.currentlyTrackingName = name;
-     $scope.viewRecords(id);
-    });
+    $state.go('timer', {timerId: id, categoryName: name});
+ 
   };
 
 

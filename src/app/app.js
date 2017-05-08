@@ -5,7 +5,9 @@ angular.module( 'ngBoilerplate', [
   'templates-common',
   'ngBoilerplate.home',
   'ngBoilerplate.start',
+  'ngBoilerplate.timer',
     'api.service',
+    'environment.service',
 'timer',
   'ui.router'
 ])

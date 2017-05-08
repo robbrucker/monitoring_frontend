@@ -30,7 +30,7 @@ module.exports = {
     ctpl: [ 'src/common/**/*.tpl.html' ],
 
     html: [ 'src/index.html' ],
-    less: 'src/less/main.less'
+    less: ['src/less/main.less']
   },
 
   /**
@@ -71,9 +71,12 @@ module.exports = {
         'vendor/moment/min/moment.min.js',
         'vendor/moment/min/locales.min.js',
         'vendor/humanize-duration/humanize-duration.js',
-      'vendor/angular-timer/dist/angular-timer.min.js'
+      'vendor/angular-timer/dist/angular-timer.min.js',
+        'src/assets/rachet.js'
     ],
     css: [
+      'src/assets/rachet.css',
+        'src/asset/rachet-theme-ios.css'
     ],
     assets: [
     ]
