@@ -65,9 +65,9 @@ angular.module( 'ngBoilerplate.timer', [
       $scope.lastRecord.data = result;
       $scope.currentlyTracking = null;
       $scope.categoryRecords = null;
-      $scope.getLastRecords();
+      $state.go('start');
     });
-    $state.go('start');
+
   };
   $scope.enterTimeManually = function() {
     $scope.manualTime = true;
