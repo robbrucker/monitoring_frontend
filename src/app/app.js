@@ -5,9 +5,11 @@ angular.module( 'ngBoilerplate', [
   'templates-common',
   'ngBoilerplate.home',
   'ngBoilerplate.start',
+    'angularMoment',
   'ngBoilerplate.timer',
     'api.service',
     'environment.service',
+  'ui.bootstrap',
 'timer',
   'ui.router'
 ])

@@ -72,7 +72,9 @@ module.exports = {
         'vendor/moment/min/locales.min.js',
         'vendor/humanize-duration/humanize-duration.js',
       'vendor/angular-timer/dist/angular-timer.min.js',
-        'src/assets/rachet.js'
+      'vendor/moment/moment.js',
+        'vendor/angular-moment/angular-moment.js',
+      'vendor/angular-bootstrap/ui-bootstrap.js',
     ],
     css: [
       'src/assets/rachet.css',

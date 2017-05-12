@@ -38,9 +38,14 @@ angular.module( 'ngBoilerplate.timer', [
 /**
  * And of course we define a controller for our route.
  */
-.controller( 'TimerCtrl', function TimerController( $scope, apiService, $rootScope, sessionService, $state, $stateParams) {
+.controller( 'TimerCtrl', function TimerController( $scope, apiService, $rootScope, sessionService, $state, $stateParams, moment) {
   var id = $stateParams.timerId;
   var name = $stateParams.categoryName;
+  $scope.timeStarted = moment(Date.now()).format('h:mm:ss a');
+  $scope.manualTime = false;
+  $scope.manualEntryCompleted = false;
+  $scope.showTimeEntry = true;
+  
   apiService.startTracking(id).then(function (result) {
     $scope.currentlyTracking = {};
     $scope.currentlyTracking.categoryId = id;
@@ -50,8 +55,7 @@ angular.module( 'ngBoilerplate.timer', [
     //todo: refactor
     // $scope.currentlyTrackingCategoryId = id;
     // $scope.currentlyTrackingId = result.id;
-    // $scope.currentlyTrackingName = name;
-    $scope.viewRecords(id);
+
   });
 
   $scope.stopTracking = function() {
@@ -65,8 +69,24 @@ angular.module( 'ngBoilerplate.timer', [
     });
     $state.go('start');
   };
+  $scope.enterTimeManually = function() {
+    $scope.manualTime = true;
+  };
+  $scope.range = function(start, end) {
+    var result = [];
+    for (var i = start; i <= end; i++) {
+      result.push(i);
+    }
+    return result;
+  };
 
-
+  
+  $scope.manualEntry = function(val) {
+    $scope.manualEntryCompleted = true;
+    $scope.showTimeEntry = false;
+    $scope.timeStarted = moment(val, 'hh:mm:ss a');
+  };
+  
 
 })
 ;

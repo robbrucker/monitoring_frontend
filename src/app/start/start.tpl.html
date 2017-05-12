@@ -36,9 +36,8 @@
     <p>
             <div>
     <ul class="table-view"  ng-repeat="value in categories track by value.id">
-        <li class="table-view-cell">{{value.name}} <span ng-if="!currentlyTracking"><button class="btn btn-primary pull-right" ng-click="startTracking(value.id, value.name)">start tracking</button></span>
-            <!--<span  ng-if="!categoryRecords"><button class="btn btn-primary pull-right">View Records</button></span>-->
-        </li>
+        <button ng-click="startTracking(value.id, value.name)" class="table-view-cell btn btn-block"><h2>{{value.name}}</h2><br /><br />
+        </button>
 
     </ul>
 
