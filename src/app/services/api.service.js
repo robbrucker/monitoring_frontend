@@ -55,11 +55,12 @@ app.factory('apiService', function($q, $http, $window, sessionService, environme
                 return response.data;
             });
         },
-        stopTracking: function(id) {
+        stopTracking: function(id, startTime) {
             var obj = {};
             obj.category_record = {};
             obj.category_record.user_id = sessionService.getUserId();
             obj.category_record.id = id;
+            obj.category_record.start_time = startTime;
             obj.category_record.end_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
             return $http.put(environmentService.getApiUrl()+'/category_records/'+id, obj).then(function(response) {
                 return response.data;

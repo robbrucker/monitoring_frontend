@@ -3,7 +3,7 @@
     <timer interval="1000" ng-if="manualTime == false || manualEntryCompleted == false"><h1 class="large-timer">{{hours}} hour{{hoursS}}, <br />{{minutes}} minute{{minutesS}}, <br />{{seconds}} second{{secondsS}}.</h1></timer>
     <timer interval="1000" ng-if="manualTime == true && manualEntryCompleted == true" start-time="timeStarted" ng-model="timeEntered"><h1 class="large-timer">{{hours}} hour{{hoursS}}, <br />{{minutes}} minute{{minutesS}}, <br />{{seconds}} second{{secondsS}}.</h1></timer>
         <button class="btn btn-block" ng-click="stopTracking(currentlyTracking.id)">Stop Timer</button>
-        <button class="btn btn-block" ng-click="enterTimeManually(currentlyTracking.id)">Enter Start TIme</button>
+        <button class="btn btn-block" ng-if="manualTime == false" ng-click="enterTimeManually(currentlyTracking.id)">Enter Start i</button>
 
 </div>
 

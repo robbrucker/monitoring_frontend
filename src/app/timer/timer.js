@@ -58,8 +58,19 @@ angular.module( 'ngBoilerplate.timer', [
 
   });
 
+  $scope.$on('timer-stopped', function (event, data) {
+    if(data && data.millis) {
+       $scope.calculatedTime = moment(Date.now()).subtract(data.millis);
+      console.log("New start time ", $scope.calculatedTime);
+    }
+
+  });
+
   $scope.stopTracking = function() {
-    apiService.stopTracking($scope.currentlyTracking.id).then(function(result) {
+    $scope.$broadcast('timer-stop');
+    $scope.timerRunning = false;
+    $rootScope.$broadcast('timer-stopped');
+    apiService.stopTracking($scope.currentlyTracking.id, $scope.calculatedTime).then(function(result) {
       $scope.lastRecord = {};
       $scope.lastRecord.tracking = $scope.currentlyTracking;
       $scope.lastRecord.data = result;
@@ -80,14 +91,28 @@ angular.module( 'ngBoilerplate.timer', [
     return result;
   };
 
-  
+
   $scope.manualEntry = function(val) {
     $scope.manualEntryCompleted = true;
     $scope.showTimeEntry = false;
     $scope.timeStarted = moment(val, 'hh:mm:ss a');
   };
-  
 
+  $scope.timerRunning = true;
+
+  $scope.startTimer = function (){
+      $scope.$broadcast('timer-start');
+      $scope.timerRunning = true;
+  };
+
+  $scope.stopTimer = function (){
+      $scope.$broadcast('timer-stop');
+      $scope.timerRunning = false;
+  };
+  //
+  // $scope.$on('timer-stopped', function (event, data){
+  //     console.log('Timer Stopped - data = ', data);
+  // });
 })
 ;
 
