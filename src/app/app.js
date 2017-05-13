@@ -10,6 +10,7 @@ angular.module( 'ngBoilerplate', [
     'api.service',
     'environment.service',
   'ui.bootstrap',
+    'ngBoilerplate.last-records',
 'timer',
   'ui.router'
 ])

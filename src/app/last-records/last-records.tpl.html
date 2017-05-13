@@ -1,0 +1,74 @@
+<div ng-if="loggedIn === false">
+    <input type="text" ng-model="user.email" placeholder="email" />
+    <input type="password" ng-model="user.password" placeholder="password" />
+    <button class="btn btn-primary" ng-click="submitLogin()">Login</button>
+    <button class="btn btn-primary" ng-click="wantsToSignUp = true">Sign up</button>
+    <div ng-if="wantsToSignUp">
+        <input type="text" placeholder="name" ng-model="newUser.name" />
+        <input type="text" placeholder="email" ng-model="newUser.email" />
+        <input type="password" placeholder="password" ng-model="newUser.password" />
+        <button ng-click="createUser(newUser)" class="btn btn-primary">Sign up</button>
+    </div>
+</div>
+<div ng-if="loggedIn === true">
+    <header class="bar bar-nav">
+        <button ng-click="toggleAdminMode()" class="btn pull-left">
+            Administration
+        </button>
+        <button ng-click="logOutUser()" class="btn pull-right">
+            Logout
+        </button>
+
+    </header>    <br /><br />
+
+    <!--<div ng-if="lastRecord" class="last-record">-->
+        <!--<h1>Today:</h1>-->
+        <!--Last Record for {{lastRecord.currentlyTracking.categoryName}} on {{lastRecord.data.start_time  | date:'medium'}} ending on {{lastRecord.data.end_time  | date:'medium'}}-->
+       <!---->
+    <!--</div>-->
+
+    <br /><br />
+    <p ng-if="administrationMode">
+        <a href="#" name="individual-category">Create a new category</a>
+        <input ng-model = "category.name" type="text" />
+        <button class="btn btn-primary" ng-click="submitCategory()">Submit</button>
+    </p>
+    <p>
+<div>
+    <h1>Choose a category to begin</h1>
+    <ul class="table-view"  ng-repeat="value in categories track by value.id" ng-if="!categoryRecords">
+        <button ng-click="viewRecords(value.id, value.name)" class="table-view-cell btn btn-block"><h2>{{value.name}}</h2><br /><br />
+        </button>
+
+    </ul>
+
+
+    <hr />
+
+</div>
+    </p>
+
+
+
+</div>
+
+
+<div ng-if="categoryRecords">
+    <h1>Viewing Records for {{categoryRecords.name}}</h1>
+    <div ng-repeat="value in categoryRecords.data track by $index" class="col-lg-12 col-md-12 col-sm-12">
+        <hr />
+        <div class="col-lg-3 col-md-3 col-sm-3">Started at {{value.start_time | date:'medium'}} </div>
+        <div class="col-lg-3 col-md-3 col-sm-3" ng-if="value.end_time">Ended at {{value.end_time | date:'medium'}}</div>
+        <div class="col-lg-3 col-md-3 col-sm-3" ng-if="!value.end_time">&nbsp;</div>
+        <div class="col-lg-3 col-md-3 col-sm-3">{{value.total_time}}</div>
+        <div class="col-lg-3 col-md-3 col-sm-3"><button class="btn btn-danger" ng-click="deleteEntry(value.id)">Remove</button></div>
+    <hr />
+    </p>
+    </div>
+</div>
+<hr />
+
+<div ng-if="loggedIn">
+
+</div>
+-->
