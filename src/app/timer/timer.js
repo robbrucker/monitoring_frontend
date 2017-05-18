@@ -41,7 +41,7 @@ angular.module( 'ngBoilerplate.timer', [
 .controller( 'TimerCtrl', function TimerController( $scope, apiService, $rootScope, sessionService, $state, $stateParams, moment) {
   var id = $stateParams.timerId;
   var name = $stateParams.categoryName;
-  $scope.timeStarted = moment(Date.now()).format('h:mm:ss a');
+  $scope.timeStarted = moment(Date.now()).format('HH:mm:ss');
   $scope.manualTime = false;
   $scope.manualEntryCompleted = false;
   $scope.showTimeEntry = true;

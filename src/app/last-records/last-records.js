@@ -38,10 +38,12 @@ angular.module( 'ngBoilerplate.last-records', [
 /**
  * And of course we define a controller for our route.
  */
-.controller( 'LastRecordsCtrl', function LastRecordsController( $scope, apiService, $rootScope, sessionService, $state) {
+.controller( 'LastRecordsCtrl', function LastRecordsController( $scope, apiService, $rootScope, sessionService, $state, moment) {
 
   $scope.administrationMode = false;
   $scope.viewingRecords = false;
+  $scope.editingStartVal = {};
+  $scope.editingEndVal = {};
   //login
   $scope.isUserLoggedIn = function() {
     $scope.loggedIn = apiService.userLoggedIn() ? true : false;
@@ -80,6 +82,9 @@ angular.module( 'ngBoilerplate.last-records', [
 
   $scope.viewRecords = function(id, name) {
     $scope.viewingRecords = true;
+    $scope.viewingRecord = {};
+    $scope.viewingRecord.name = name;
+    $scope.viewingRecord.id = id;
     apiService.getCategoryRecords(id).then(function(result) {
       $scope.categoryRecords = {};
       $scope.categoryRecords.data = result;
@@ -117,6 +122,40 @@ angular.module( 'ngBoilerplate.last-records', [
   $scope.toggleAdminMode = function() {
     $scope.administrationMode = !$scope.administrationMode;
   };
+
+  $scope.editStartTime = function(value) {
+
+    $scope.editingStartVal[value.id] = true;
+
+  };
+
+  $scope.editCategoryRecord = function(value, type) {
+    moment.tz.add('America/New_York');
+    if(type === 'start') {
+      var formattedStartTime = moment(value.editedStartTime, 'HH:mm:ss');
+      value.start_time = formattedStartTime;
+    }
+    else if(type === 'end') {
+      var formattedEndTime = moment(value.editedEndTime, 'HH:mm:ss');
+      value.end_time = formattedEndTime;
+    }
+    
+    apiService.editCategoryRecords(value).then(function() {
+      if(type === 'start') {
+        $scope.editingStartVal[value.id] = false;
+      }
+      else {
+        $scope.editingEndVal[value.id] = false;
+      }
+
+      $scope.viewRecords($scope.viewingRecord.id, $scope.viewingRecord.name);
+    });
+  };
+
+  $scope.editEndTime = function(value) {
+
+  };
+
 })
 
 ;

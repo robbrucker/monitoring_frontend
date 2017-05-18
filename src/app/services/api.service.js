@@ -77,6 +77,11 @@ app.factory('apiService', function($q, $http, $window, sessionService, environme
                 return response.data;
             });
         },
+        editCategoryRecords: function(value) {
+            return $http.put(environmentService.getApiUrl()+'/category_records/'+value.id, value).then(function(response) {
+                return response.data;
+            });
+        },
         getLastRecords: function() {
             var userId = sessionService.getUserId();
             return $http.get(environmentService.getApiUrl()+'/last_details/'+userId).then(function(response) {
