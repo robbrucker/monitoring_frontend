@@ -11,6 +11,7 @@ angular.module( 'ngBoilerplate', [
     'environment.service',
   'ui.bootstrap',
     'ngBoilerplate.last-records',
+    'ngBoilerplate.today-records',
 'timer',
   'ui.router'
 ])

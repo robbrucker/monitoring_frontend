@@ -24,7 +24,7 @@ angular.module( 'ngBoilerplate.last-records', [
  */
 .config(function config( $stateProvider  ) {
   $stateProvider.state( 'lastRecords', {
-    url: '/last-records',
+    url: '/last-records?category_id',
     views: {
       "main": {
         controller: 'LastRecordsCtrl',
@@ -38,7 +38,7 @@ angular.module( 'ngBoilerplate.last-records', [
 /**
  * And of course we define a controller for our route.
  */
-.controller( 'LastRecordsCtrl', function LastRecordsController( $scope, apiService, $rootScope, sessionService, $state, moment) {
+.controller( 'LastRecordsCtrl', function LastRecordsController( $scope, apiService, $rootScope, sessionService, $state, moment, $stateParams) {
 
   $scope.administrationMode = false;
   $scope.viewingRecords = false;
@@ -94,6 +94,12 @@ angular.module( 'ngBoilerplate.last-records', [
     });
   };
 
+
+  if($stateParams.category_id) {
+    $scope.viewRecords(parseInt($stateParams.category_id, 10), 'test');
+  }
+
+
   $scope.hideRecords = function() {
     $scope.categoryRecords = null;
   };
@@ -132,11 +138,11 @@ angular.module( 'ngBoilerplate.last-records', [
   $scope.editCategoryRecord = function(value, type) {
     moment.tz.add('America/New_York');
     if(type === 'start') {
-      var formattedStartTime = moment(value.editedStartTime, 'HH:mm:ss');
+      var formattedStartTime = moment.utc(moment(value.editedStartTime)).format('HH:mm:ss');
       value.start_time = formattedStartTime;
     }
     else if(type === 'end') {
-      var formattedEndTime = moment(value.editedEndTime, 'HH:mm:ss');
+      var formattedEndTime = moment.utc(moment(value.editedEndTime)).format('HH:mm:ss');
       value.end_time = formattedEndTime;
     }
     

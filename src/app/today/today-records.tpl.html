@@ -27,36 +27,35 @@
         <button class="btn btn-primary" ng-click="submitCategory()">Submit</button>
     </p>
     <p>
-        <div ng-if="!categoryRecords">
-            <h1>Choose a category to begin</h1>
+        <div>
+            <!--<h1>Choose a category to begin</h1>-->
             <ul class="table-view"  ng-repeat="value in categories track by value.id" ng-if="!categoryRecords">
-                <button ng-click="viewRecords(value.id, value.name)" class="table-view-cell btn btn-block"><h2>{{value.name}}</h2><br /><br />
+                <button ng-click="viewRecords(value.id, value.name)" class="table-view-cell btn btn-block"><h2>{{value.name}} <br /> <br /> {{value.today.total_time}}</h2><br /><br />
                 </button>
             </ul>
             <hr />
         </div>
     </p>
 </div>
-<div ng-if="categoryRecords">
+<div ng-if="categoryRecord">
     <h1>Viewing Records for {{categoryRecords.name}}</h1>
     <div ng-repeat="value in categoryRecords.data track by $index" class="col-lg-12 col-md-12 col-sm-12">
         <hr />
         <div class="col-lg-3 col-md-3 col-sm-3">
-            <button ng-click="editingStartVal[value.id] = true" ng-if="!editingStartVal[value.id]" class="btn-link">Started at {{value.start_time | date:'medium' : -0500}}</button>
-            <input  type="time" name="time"  ng-if="editingStartVal[value.id] == true" ng-model="value.editedStartTime" ng-value="value.start_time | date:'HH:mm'" />
+            <button ng-click="editingStartVal[value.id] = true" ng-if="!editingStartVal[value.id]" class="btn-link">Started at {{value.start_time | date:'medium'}}</button>
+            <input type="text" ng-if="editingStartVal[value.id] == true" ng-model="value.editedStartTime" ng-value="value.start_time | date:'HH:mm'" />
             <button class="btn-link" ng-if="editingStartVal[value.id] == true" ng-click="editCategoryRecord(value, 'start')">Save</button>
             <button class="btn-link" ng-if="editingStartVal[value.id] == true" ng-click="editingStartVal[value.id] = null">Cancel</button>
         </div>
 
 
         <div class="col-lg-3 col-md-3 col-sm-3"   >
-            <button class="btn-link" ng-click="editingEndVal[value.id] = true" ng-if="!editingEndVal[value.id] && value.end_time != null">Ended at {{value.end_time | date:'medium' : -0500}}</button>
+            <button class="btn-link" ng-click="editingEndVal[value.id] = true" ng-if="!editingEndVal[value.id] && value.end_time != null">Ended at {{value.end_time | date:'medium'}}</button>
             <button class="btn btn-link" ng-click="editingEndVal[value.id] = true" ng-if="!editingEndVal[value.id] && value.end_time == null">Enter End Time</button>
-            <input type="time" name="time" ng-if="editingEndVal[value.id] == true" ng-model="value.editedEndTime" ng-value="value.end_time | date:'HH:mm'" />
+            <input type="text" ng-if="editingEndVal[value.id] == true" ng-model="value.editedEndTime" ng-value="value.end_time | date:'HH:mm'" />
             <button class="btn-link" ng-if="editingEndVal[value.id] == true" ng-click="editCategoryRecord(value, 'end')">Save</button>
             <button class="btn-link" ng-if="editingEndVal[value.id] == true" ng-click="editingEndVal[value.id] = null">Cancel</button>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3">{{value.total_time}}</div>
         <div class="col-lg-3 col-md-3 col-sm-3"><button class="btn btn-danger" ng-click="deleteEntry(value.id)">Remove</button></div>
     <hr />
     </p>

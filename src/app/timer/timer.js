@@ -74,9 +74,8 @@ angular.module( 'ngBoilerplate.timer', [
       $scope.lastRecord = {};
       $scope.lastRecord.tracking = $scope.currentlyTracking;
       $scope.lastRecord.data = result;
-      $scope.currentlyTracking = null;
       $scope.categoryRecords = null;
-      $state.go('start');
+      $state.go('lastRecords', {category_id: $scope.currentlyTracking.categoryId});
     });
 
   };
@@ -97,6 +96,8 @@ angular.module( 'ngBoilerplate.timer', [
     $scope.showTimeEntry = false;
     $scope.timeStarted = moment(val, 'hh:mm:ss a');
   };
+
+
 
   $scope.timerRunning = true;
 

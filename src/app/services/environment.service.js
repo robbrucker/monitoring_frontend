@@ -15,7 +15,7 @@ app.factory('environmentService', function() {
                 return "http://localhost:3000";
             }
             else {
-                return "http://monitorapi.brucker.tech";
+                return "https://monitorapi.brucker.tech";
             }
         }
 

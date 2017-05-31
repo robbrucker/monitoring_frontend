@@ -95,6 +95,12 @@ app.factory('apiService', function($q, $http, $window, sessionService, environme
             return $http.post(environmentService.getApiUrl()+'/users', u).then(function(response) {
                 return response.data;
             });
+        },
+        getTodaysRecords: function(id) {
+            var userId = sessionService.getUserId();
+            return $http.get(environmentService.getApiUrl()+'/todays_records/'+userId+'/'+id).then(function(response) {
+                return response.data;
+            });
         }
 
     };
