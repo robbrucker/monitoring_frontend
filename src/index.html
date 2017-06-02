@@ -3,18 +3,6 @@
   <head>
     <title>Time Monitoring</title>
 
-    <!-- social media tags -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@joshdmiller">
-    <meta name="twitter:title" content="ngBoilerplate">
-    <meta name="twitter:description" content="Non-Trivial AngularJS Made Easy: Everything you need to kickstart AngularJS projects: a best-practice directory structure, an intelligent build system, and the best web design libraries around.">
-    <meta name="twitter:creator" content="@joshdmiller">
-    <meta name="twitter:image:src" content="https://a248.e.akamai.net/assets.github.com/images/modules/logos_page/Octocat.png?1366128846">
-    <meta property="og:title" content="ngBoilerplate" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://bit.ly/ngBoilerplate" />
-    <meta property="og:image" content="https://a248.e.akamai.net/assets.github.com/images/modules/logos_page/Octocat.png?1366128846" />
-    <meta property="og:description" content="Non-Trivial AngularJS Made Easy: Everything you need to kickstart AngularJS projects: a best-practice directory structure, an intelligent build system, and the best web design libraries around.">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto|Exo" rel="stylesheet">
@@ -29,6 +17,7 @@
     <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
     <script type="text/javascript" src="<%= file %>"></script><% }); %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone.min.js"></script>
+    <script src="https://use.fontawesome.com/d6d7c14c85.js"></script>
 
     <link rel="stylesheet" type="text/css" href="assets/ratchet.js" />
     <!-- it's stupid to have to load it here, but this is for the +1 button -->
@@ -96,15 +85,17 @@
     <div class="container" ui-view="main"></div>
     <nav class="bar bar-tab">
     <a class="tab-item active" href="/#start">
-    <span class="icon icon-home"></span>
+      <i class="fa fa-home fa-4" aria-hidden="true"></i>
     <span class="tab-label">Home</span>
     </a>
     <a class="tab-item" href="/#last-records">
-    <span class="icon icon-person"></span>
+      <i class="fa fa-file fa-4" aria-hidden="true"></i>
     <span class="tab-label">All Records</span>
     </a>
+
+
       <a class="tab-item" href="/#today-records">
-        <span class="icon icon-person"></span>
+        <i class="fa fa-calendar fa-4" aria-hidden="true"></i>
         <span class="tab-label">Today's Records</span>
       </a>
     <!--<a class="tab-item" href="#">-->
