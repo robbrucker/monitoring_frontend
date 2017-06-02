@@ -62,7 +62,15 @@ angular.module( 'ngBoilerplate.start', [
    */
   $scope.submitLogin = function() {
     apiService.logInUser($scope.user).then(function(result) {
-      $state.go($state.current, {}, {reload: true});
+      if(result && result.error) {
+        console.log("error happened");
+        $scope.error = "Error logging in.";
+      }
+      else {
+        $scope.error = false;
+        $state.go($state.current, {}, {reload: true});
+      }
+
     });
   };
   if(!$scope.loggedIn) {

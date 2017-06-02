@@ -1,13 +1,29 @@
-<div>
-    <h4>Currently Tracking {{currentlyTracking.categoryName}}</h4>
-    <timer interval="1000" ng-if="manualTime == false || manualEntryCompleted == false"><h1 class="large-timer">{{hours}} hour{{hoursS}}, <br />{{minutes}} minute{{minutesS}}, <br />{{seconds}} second{{secondsS}}.</h1></timer>
-    <timer interval="1000" ng-if="manualTime == true && manualEntryCompleted == true" start-time="timeStarted" ng-model="timeEntered"><h1 class="large-timer">{{hours}} hour{{hoursS}}, <br />{{minutes}} minute{{minutesS}}, <br />{{seconds}} second{{secondsS}}.</h1></timer>
-        <button class="btn btn-block" ng-click="stopTracking(currentlyTracking.id)">Stop Timer</button>
-        <button class="btn btn-block" ng-if="manualTime == false" ng-click="enterTimeManually(currentlyTracking.id)">Manually Enter Time</button>
 
-</div>
+<div class="center-area ">
+    <div>
+        <h2>Currently Tracking {{currentlyTracking.categoryName}}</h2><br />
+        <timer interval="1000" ng-if="manualTime == false || manualEntryCompleted == false"><h1 class="large-timer">{{hours}} hour{{hoursS}}, <br />{{minutes}} minute{{minutesS}}, <br />{{seconds}} second{{secondsS}}.</h1></timer>
+        <timer interval="1000" ng-if="manualTime == true && manualEntryCompleted == true" start-time="timeStarted" ng-model="timeEntered"><h1 class="large-timer">{{hours}} hour{{hoursS}}, <br />{{minutes}} minute{{minutesS}}, <br />{{seconds}} second{{secondsS}}.</h1></timer>
+        <button class="btn btn-primary" ng-click="stopTracking(currentlyTracking.id)">Stop Timer</button>
+        <button class="btn btn-primary" ng-if="manualTime == false" ng-click="enterTimeManually(currentlyTracking.id)">Manually Enter Time</button>
+        <br /><br />
+        <button class="btn btn-primary" ng-if="manualTime == false" ng-click="showItemDisplay()"> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;Track another item&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;  </button>
+    </div>
 
-<div ng-if="manualTime == true && showTimeEntry == true">
-  <input type="text" placeholder="Enter time" ng-model="timeStarted" />
-    <button class="btn btn-block" ng-click="manualEntry(timeStarted)">Enter Start TIme</button>
+
+
+    <!--<div ng-if="itemDisplay ==  true">-->
+        <!--<br /><br /><br />-->
+        <!--<ul class="table-view"  ng-repeat="value in categories track by value.id">-->
+            <!--<button ng-click="startTracking(value.id, value.name)" class="table-view-cell btn btn-block"><h2>{{value.name}}</h2><br /><br />-->
+            <!--</button>-->
+        <!--</ul>-->
+    <!--</div>-->
+
+
+    <div ng-if="manualTime == true && showTimeEntry == true">
+        <input type="text" placeholder="Enter time" ng-model="timeStarted" />
+        <button class="btn btn-primary" ng-click="manualEntry(timeStarted)">Enter Start TIme</button>
+    </div>
+
 </div>

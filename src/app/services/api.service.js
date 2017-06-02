@@ -1,5 +1,5 @@
 var app = angular.module("api.service", []);
-app.factory('apiService', function($q, $http, $window, sessionService, environmentService) {
+app.factory('apiService', function($q, $http, $window, sessionService, environmentService, moment) {
     var product = {
         getApi: function() {
 
@@ -16,6 +16,9 @@ app.factory('apiService', function($q, $http, $window, sessionService, environme
                     $window.localStorage.setItem("userId", response.data.id);
                     return response.data;
                 }
+            }, function(err) {
+                console.log("Err is ", err);
+                return {error: true, status: err.status};
             });
         },
         submitCategory: function(category) {
@@ -50,7 +53,7 @@ app.factory('apiService', function($q, $http, $window, sessionService, environme
             obj.category_record = {};
             obj.category_record.user_id = sessionService.getUserId();
             obj.category_record.category_id = id;
-            obj.category_record.start_time =new Date().toISOString().slice(0, 19).replace('T', ' ');
+            obj.category_record.start_time =moment.utc(moment(new Date())).format('HH:mm:ss');
             return $http.post(environmentService.getApiUrl()+'/category_records', obj).then(function (response) {
                 return response.data;
             });
@@ -61,7 +64,7 @@ app.factory('apiService', function($q, $http, $window, sessionService, environme
             obj.category_record.user_id = sessionService.getUserId();
             obj.category_record.id = id;
             obj.category_record.start_time = startTime;
-            obj.category_record.end_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            obj.category_record.end_time = moment.utc(moment(new Date())).format('HH:mm:ss');
             return $http.put(environmentService.getApiUrl()+'/category_records/'+id, obj).then(function(response) {
                 return response.data;
             });

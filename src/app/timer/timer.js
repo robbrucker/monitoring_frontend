@@ -110,10 +110,15 @@ angular.module( 'ngBoilerplate.timer', [
       $scope.$broadcast('timer-stop');
       $scope.timerRunning = false;
   };
-  //
-  // $scope.$on('timer-stopped', function (event, data){
-  //     console.log('Timer Stopped - data = ', data);
-  // });
+ $scope.showItemDisplay = function() {
+   $scope.itemDisplay = true;
+   if(!$scope.categories) {
+     apiService.getCategory().then(function(result) {
+       $scope.categories = result;
+     });
+   }
+
+ };
 })
 ;
 
