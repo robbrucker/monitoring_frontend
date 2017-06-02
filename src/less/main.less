@@ -1,29 +1,10 @@
-/**
- * This is the main application stylesheet. It should include or import all
- * stylesheets used throughout the application as this is the only stylesheet in
- * the Grunt configuration that is automatically processed.
- */
-
-
-/**
- * First, we include the Twitter Bootstrap LESS files. Only the ones used in the
- * project should be imported as the rest are just wasting space.
- */
 
 @import '../../vendor/bootstrap/less/bootstrap.less';
 
 
-/**
- * This is our main variables file. We must include it last so we can overwrite any variable
- * definitions in our imported stylesheets.
- */
 
 @import 'variables.less';
 
-
-/**
- * Typography
- */
 
 @font-face {
   font-family: 'Roboto';
@@ -114,12 +95,58 @@ h1, .btn {
  font-family: 'Roboto';
 }
 
-/**
- * Now that all app-wide styles have been applied, we can load the styles for
- * all the submodules and components we are using. 
- *
- * TODO: In a later version of this boilerplate, I'd like to automate this.
- */
-
 @import '../app/home/home.less';
 
+button.table-view-cell.btn.btn-block {
+  background-color: #0f0f38;
+  color: #fff;
+  font-family: 'Exo', sans-serif;
+}
+h2 {
+  font-size:45px !important;
+  color:white;
+  font-family: 'Exo', sans-serif;
+}
+h1 {
+  font-family: 'Exo', sans-serif;
+}
+
+.col-lg-12.col-md-12.col-sm-12 {
+  background-color: rgba(23, 3, 3, 0.53);
+  color:green;
+  margin-bottom:20px;
+  padding: 20px 20px 20px 20px;
+}
+
+button.btn-link.ng-binding {
+  color: #fff;
+}
+
+button.btn-link {
+  font-size:22px;
+  font-family: 'Exo', sans-serif;
+}
+
+.btn-primary {
+  font-size: 18px !important;
+}
+.btn-danger {
+  font-size: 18px !important;
+}
+
+body {
+  background-color: #23546b !important;
+}
+
+.center-area {
+  padding: 5% 0% 5% 5%;
+}
+input {
+  color: black !important;
+}
+
+button.table-view-cell.btn.btn-block {
+  color: #fff;
+  border: 1px solid #007aff;
+  background-color: #007aff;
+}
