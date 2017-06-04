@@ -45,6 +45,23 @@ angular.module( 'ngBoilerplate.timer', [
   $scope.manualTime = false;
   $scope.manualEntryCompleted = false;
   $scope.showTimeEntry = true;
+
+
+  $scope.searchVal = "";
+  $scope.searchResults = {};
+  $scope.getTagsFromApi = function() {
+
+    apiService.getTags(id).then(function(val) {
+      // $scope.showSearchResults = false;
+      _.each(val, function(tagResult) {
+        if(!_.find($scope.searchResults, {name: tagResult.name})) {
+          $scope.searchResults.push({title: "Add "+tagResult.name, name: tagResult.name, action: "addTag()", id: 1});
+        }
+      });
+    });
+  };
+  $scope.getTagsFromApi();
+
   
   apiService.startTracking(id).then(function (result) {
     $scope.currentlyTracking = {};
@@ -98,6 +115,33 @@ angular.module( 'ngBoilerplate.timer', [
   };
 
 
+
+
+  $scope.showSearchResults = false;
+  $scope.searchResults = [];
+  $scope.searchResults.push({title: "Add Value", name: "Add Value", action: "addVal()", id: 1});
+  $scope.searchVal = "";
+  $scope.searchText = function() {
+    if($scope.searchVal !== "") {
+      $scope.showSearchResults = true;
+      var frozenVal = _.clone($scope.searchVal);
+      var addValue = _.find($scope.searchResults, {id: 1});
+      addValue.title = "Add New Tag: "+$scope.searchVal;
+      addValue.name = $scope.searchVal;
+      addValue.action = "addVal('"+frozenVal+"')";
+
+    }
+    else {
+      $scope.showSearchResults = false;
+    }
+  };
+
+  $scope.addVal = function(frozenVal) {
+    apiService.addCategoryTag(frozenVal, id);
+    _.remove($scope.searchResults, {name: frozenVal});
+    $scope.getTagsFromApi();
+
+  };
 
   $scope.timerRunning = true;
 

@@ -104,6 +104,32 @@ app.factory('apiService', function($q, $http, $window, sessionService, environme
             return $http.get(environmentService.getApiUrl()+'/todays_records/'+userId+'/'+id).then(function(response) {
                 return response.data;
             });
+        },
+        addCategoryTag: function(val, categoryId) {
+            if(val.tag) {
+                val.tag =  null;
+            }
+            var userId = sessionService.getUserId();
+
+            return $http.post(environmentService.getApiUrl()+'/tags', {name: val}).then(function(response) {
+                if(response.data.id) {
+                    var send_obj = {};
+                    send_obj.category_tag = {category_id: categoryId, tag_id: parseInt(response.data.id, 10), user_id: parseInt(userId, 10)};
+                    return $http.post(environmentService.getApiUrl()+'/category_tags', send_obj).then(function() {
+                        return true;
+                    });
+                }
+                else {
+                    return false;
+                }
+
+            });
+        },
+        getTags: function(categoryId) {
+            var userId = sessionService.getUserId();
+            return $http.get(environmentService.getApiUrl()+'/category_tags/?user_id='+userId+'&category_id='+categoryId).then(function(response) {
+                return response.data;
+            });
         }
 
     };
