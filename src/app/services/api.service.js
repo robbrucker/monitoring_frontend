@@ -130,6 +130,12 @@ app.factory('apiService', function($q, $http, $window, sessionService, environme
             return $http.get(environmentService.getApiUrl()+'/category_tags/?user_id='+userId+'&category_id='+categoryId).then(function(response) {
                 return response.data;
             });
+        },
+        getTagFuzzySearch: function(categoryId, fuzzyText) {
+            var userId = sessionService.getUserId();
+            return $http.get(environmentService.getApiUrl()+'/category_tags/?user_id='+userId+'&category_id='+categoryId+'&fuzzy='+fuzzyText).then(function(response) {
+                return response.data;
+            });
         }
 
     };

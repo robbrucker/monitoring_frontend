@@ -1,27 +1,8 @@
-/**
- * Each section of the site has its own module. It probably also has
- * submodules, though this boilerplate is too simple to demonstrate it. Within
- * `src/app/home`, however, could exist several additional folders representing
- * additional modules that would then be listed as dependencies of this one.
- * For example, a `note` section could have the submodules `note.create`,
- * `note.delete`, `note.edit`, etc.
- *
- * Regardless, so long as dependencies are managed correctly, the build process
- * will automatically take take of the rest.
- *
- * The dependencies block here is also where component dependencies should be
- * specified, as shown below.
- */
+
 angular.module( 'ngBoilerplate.timer', [
   'ui.router',
   'plusOne'
 ])
-
-/**
- * Each section or module of the site can also have its own routes. AngularJS
- * will handle ensuring they are all available at run-time, but splitting it
- * this way makes each module more "self-contained".
- */
 .config(function config( $stateProvider  ) {
   $stateProvider.state( 'timer', {
     url: '/timer?timerId&categoryName',
@@ -55,7 +36,7 @@ angular.module( 'ngBoilerplate.timer', [
       // $scope.showSearchResults = false;
       _.each(val, function(tagResult) {
         if(!_.find($scope.searchResults, {name: tagResult.name})) {
-          $scope.searchResults.push({title: "Add "+tagResult.name, name: tagResult.name, action: "addTag()", id: 1});
+          $scope.searchResults.push({title: "Add "+tagResult.name, name: tagResult.name, action: "addTag()", id: tagResult.id});
         }
       });
     });
@@ -115,31 +96,51 @@ angular.module( 'ngBoilerplate.timer', [
   };
 
 
+  $scope.initializeSearchResults = function(searchVal) {
+    $scope.searchResults = [];
+    if(searchVal) {
+      $scope.searchResults.push({title: "Add Value "+searchVal, name: searchVal, action: "addVal("+searchVal+")", id: 1});
+    }
+    else {
+      $scope.searchResults.push({title: "Add Value", name: "Add Value", action: "addVal()", id: 1});
+    }
 
+  };
+
+  $scope.initializeSearchResults();
 
   $scope.showSearchResults = false;
-  $scope.searchResults = [];
-  $scope.searchResults.push({title: "Add Value", name: "Add Value", action: "addVal()", id: 1});
+
   $scope.searchVal = "";
-  $scope.searchText = function() {
+  $scope.searchText = function(added) {
     if($scope.searchVal !== "") {
+
       $scope.showSearchResults = true;
       var frozenVal = _.clone($scope.searchVal);
-      var addValue = _.find($scope.searchResults, {id: 1});
-      addValue.title = "Add New Tag: "+$scope.searchVal;
-      addValue.name = $scope.searchVal;
-      addValue.action = "addVal('"+frozenVal+"')";
 
+      apiService.getTagFuzzySearch(id, frozenVal).then(function(results) {
+        if(!added || added !== true) {
+          $scope.initializeSearchResults(frozenVal);
+        }
+        _.each(results, function(d) {
+          $scope.searchResults.push({title: "Tag "+d.name, name: d.name, action: "addTag()", id: d.id});
+        });
+      });
     }
     else {
       $scope.showSearchResults = false;
     }
   };
+  
+  
 
   $scope.addVal = function(frozenVal) {
-    apiService.addCategoryTag(frozenVal, id);
-    _.remove($scope.searchResults, {name: frozenVal});
-    $scope.getTagsFromApi();
+    apiService.addCategoryTag(frozenVal, id).then(function() {
+      _.remove($scope.searchResults, {name: frozenVal});
+      // $scope.initializeSearchResults(frozenVal);
+      $scope.searchText(true);
+    });
+
 
   };
 

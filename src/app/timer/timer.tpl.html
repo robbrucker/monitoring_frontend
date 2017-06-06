@@ -1,3 +1,19 @@
+<header class="bar bar-nav">
+    <!--<button class="btn pull-left">-->
+        <!--Left-->
+    <!--</button>-->
+    <button class="btn pull-right" ng-click="showSearchResults = true">
+        Show Tags
+    </button>
+    <div class="segmented-control">
+        <a class="control-item" ng-click="stopTracking(currentlyTracking.id)">Stop Timer</a>
+        <a class="control-item" ng-if="manualTime == false" ng-click="enterTimeManually(currentlyTracking.id)">Manually Enter Time</a>
+    </div>
+</header>
+
+
+
+<br /><br /><br /><br />
 <input type="text" ng-change="searchText()"  ng-model-options="{ debounce: 500 }"  ng-model="searchVal" placeholder="Tag Search"/>
 <div class="center-area" ng-if="showSearchResults == true">
     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -10,13 +26,13 @@
         <timer interval="1000" ng-if="manualTime == false || manualEntryCompleted == false"><h1 class="large-timer">{{hours}} hour{{hoursS}}, <br />{{minutes}} minute{{minutesS}}, <br />{{seconds}} second{{secondsS}}.</h1></timer>
         <timer interval="1000" ng-if="manualTime == true && manualEntryCompleted == true" start-time="timeStarted" ng-model="timeEntered"><h1 class="large-timer">{{hours}} hour{{hoursS}}, <br />{{minutes}} minute{{minutesS}}, <br />{{seconds}} second{{secondsS}}.</h1></timer>
 
-        <nav class="navbar navbar-light bg-faded">
-            <form class="form-inline">
-                <button class="btn btn-primary" ng-click="stopTracking(currentlyTracking.id)">Stop Timer</button>
-                <button class="btn btn-primary" ng-if="manualTime == false" ng-click="enterTimeManually(currentlyTracking.id)">Manually Enter Time</button>
-                <!--<button class="btn btn-primary" ng-if="manualTime == false" ng-click="showItemDisplay()"> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;Track another item&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;  </button>-->
-            </form>
-        </nav>
+        <!--<nav class="navbar navbar-light bg-faded">-->
+            <!--<form class="form-inline">-->
+                <!--<button class="btn btn-primary" ng-click="stopTracking(currentlyTracking.id)">Stop Timer</button>-->
+                <!--<button class="btn btn-primary" ng-if="manualTime == false" ng-click="enterTimeManually(currentlyTracking.id)">Manually Enter Time</button>-->
+                <!--&lt;!&ndash;<button class="btn btn-primary" ng-if="manualTime == false" ng-click="showItemDisplay()"> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;Track another item&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;  </button>&ndash;&gt;-->
+            <!--</form>-->
+        <!--</nav>-->
 
     </div>
 

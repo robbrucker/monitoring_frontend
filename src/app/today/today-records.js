@@ -1,27 +1,9 @@
-/**
- * Each section of the site has its own module. It probably also has
- * submodules, though this boilerplate is too simple to demonstrate it. Within
- * `src/app/home`, however, could exist several additional folders representing
- * additional modules that would then be listed as dependencies of this one.
- * For example, a `note` section could have the submodules `note.create`,
- * `note.delete`, `note.edit`, etc.
- *
- * Regardless, so long as dependencies are managed correctly, the build process
- * will automatically take take of the rest.
- *
- * The dependencies block here is also where component dependencies should be
- * specified, as shown below.
- */
+
 angular.module( 'ngBoilerplate.today-records', [
   'ui.router',
   'plusOne'
 ])
 
-/**
- * Each section or module of the site can also have its own routes. AngularJS
- * will handle ensuring they are all available at run-time, but splitting it
- * this way makes each module more "self-contained".
- */
 .config(function config( $stateProvider  ) {
   $stateProvider.state( 'todayRecords', {
     url: '/today-records',
@@ -35,9 +17,7 @@ angular.module( 'ngBoilerplate.today-records', [
   });
 })
 
-/**
- * And of course we define a controller for our route.
- */
+
 .controller( 'TodayRecordsCtrl', function LastRecordsController( $scope, apiService, $rootScope, sessionService, $state, moment) {
 
   $scope.administrationMode = false;
@@ -80,10 +60,6 @@ angular.module( 'ngBoilerplate.today-records', [
     $scope.categories = result;
     _.each($scope.categories, function(category) {
       apiService.getTodaysRecords(category.id).then(function(result) {
-        // $scope.categoryRecords = {};
-        // $scope.categoryRecords.data = result;
-        // $scope.categoryRecords.id = id;
-        // $scope.categoryRecords.name = name;
         category.today = result;
       });
     });
@@ -95,70 +71,13 @@ angular.module( 'ngBoilerplate.today-records', [
     $scope.viewingRecord.name = name;
     $scope.viewingRecord.id = id;
     apiService.getTodaysRecords(id).then(function(result) {
-      // $scope.categoryRecords = {};
-      // $scope.categoryRecords.data = result;
-      // $scope.categoryRecords.id = id;
-      // $scope.categoryRecords.name = name;
-console.log("results are ", result);
+      //TODO: Implement something here
     });
   };
-  
-  
-  //
-  // $scope.hideRecords = function() {
-  //   $scope.categoryRecords = null;
-  // };
-  
-  // $scope.deleteEntry = function(id) {
-  //   apiService.removeEntry(id).then(function(result) {
-  //     if($scope.categoryRecords && $scope.categoryRecords.id) {
-  //       $scope.viewRecords($scope.categoryRecords.id);
-  //     }
-  //     else if($scope.currentlyTracking && $scope.currentlyTracking.categoryId) {
-  //       $scope.viewRecords($scope.currentlyTracking.categoryId);
-  //     }
-  //
-  //   });
-  // };
 
-
-  
   $scope.toggleAdminMode = function() {
     $scope.administrationMode = !$scope.administrationMode;
   };
-
-  // $scope.editStartTime = function(value) {
-  //
-  //   $scope.editingStartVal[value.id] = true;
-  //
-  // };
-  //
-  // $scope.editCategoryRecord = function(value, type) {
-  //   moment.tz.add('America/New_York');
-  //   if(type === 'start') {
-  //     var formattedStartTime = moment(value.editedStartTime, 'HH:mm:ss');
-  //     value.start_time = formattedStartTime;
-  //   }
-  //   else if(type === 'end') {
-  //     var formattedEndTime = moment(value.editedEndTime, 'HH:mm:ss');
-  //     value.end_time = formattedEndTime;
-  //   }
-  //  
-  //   apiService.editCategoryRecords(value).then(function() {
-  //     if(type === 'start') {
-  //       $scope.editingStartVal[value.id] = false;
-  //     }
-  //     else {
-  //       $scope.editingEndVal[value.id] = false;
-  //     }
-  //
-  //     $scope.viewRecords($scope.viewingRecord.id, $scope.viewingRecord.name);
-  //   });
-  // };
-  //
-  // $scope.editEndTime = function(value) {
-  //
-  // };
 
   $rootScope.$on('unauthorized',function(event){
     $scope.logOutUser();
