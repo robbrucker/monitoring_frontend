@@ -123,7 +123,7 @@ angular.module( 'ngBoilerplate.timer', [
           $scope.initializeSearchResults(frozenVal);
         }
         _.each(results, function(d) {
-          $scope.searchResults.push({title: "Tag "+d.name, name: d.name, action: "addTag()", id: d.id});
+          $scope.searchResults.push({title: "Tag "+d.name, name: d.name, action: "addTag("+d.id+")", id: d.id});
         });
       });
     }
@@ -135,12 +135,30 @@ angular.module( 'ngBoilerplate.timer', [
   
 
   $scope.addVal = function(frozenVal) {
-    apiService.addCategoryTag(frozenVal, id).then(function() {
+    apiService.addCategoryTag(frozenVal, id).then(function(response) {
       _.remove($scope.searchResults, {name: frozenVal});
+      response.title = response.name;
+      $scope.addTag(null, response);
       // $scope.initializeSearchResults(frozenVal);
-      $scope.searchText(true);
+      //$scope.searchText(true);
     });
+  };
 
+
+  $scope.tags = [];
+  $scope.addTag = function(id, newTag) {
+    var tag = {};
+    if(newTag) {
+      tag = newTag;
+
+    }
+    else {
+      tag = _.find($scope.searchResults, {id: id});
+      _.remove($scope.searchResults, {id: tag.id});
+    }
+    tag.tag_id = tag.id;
+    $scope.tags.push(tag);
+    apiService.addTimerTag($scope.currentlyTracking.id, tag.tag_id);
 
   };
 

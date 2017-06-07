@@ -115,8 +115,12 @@ app.factory('apiService', function($q, $http, $window, sessionService, environme
                 if(response.data.id) {
                     var send_obj = {};
                     send_obj.category_tag = {category_id: categoryId, tag_id: parseInt(response.data.id, 10), user_id: parseInt(userId, 10)};
-                    return $http.post(environmentService.getApiUrl()+'/category_tags', send_obj).then(function() {
-                        return true;
+                    return $http.post(environmentService.getApiUrl()+'/category_tags', send_obj).then(function(r) {
+                        var ret = {};
+                        ret.id = response.data.id;
+                        ret.name = response.data.name;
+                        ret.title = response.data.name;
+                        return ret;
                     });
                 }
                 else {
@@ -134,6 +138,16 @@ app.factory('apiService', function($q, $http, $window, sessionService, environme
         getTagFuzzySearch: function(categoryId, fuzzyText) {
             var userId = sessionService.getUserId();
             return $http.get(environmentService.getApiUrl()+'/category_tags/?user_id='+userId+'&category_id='+categoryId+'&fuzzy='+fuzzyText).then(function(response) {
+                return response.data;
+            });
+        },
+        addTimerTag: function(timerId, tagId) {
+            var userId = sessionService.getUserId();
+            var retObj = {};
+            retObj.user_id = userId;
+            retObj.category_record_id = timerId;
+            retObj.tag_id = tagId;
+            return $http.post(environmentService.getApiUrl()+'/timer_tags', retObj).then(function(response) {
                 return response.data;
             });
         }
