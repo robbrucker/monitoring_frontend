@@ -117,13 +117,20 @@ angular.module( 'ngBoilerplate.last-records', [
   };
 
   $scope.editCategoryRecord = function(value, type) {
-    moment.tz.add('America/New_York');
+
     if(type === 'start') {
-      var formattedStartTime = moment.utc(moment(value.editedStartTime)).format('HH:mm:ss');
+
+      var dateVal = moment(value.end_time).format('"YYYY-MM-DD');
+      var formattedVal = moment(value.editedStartTime).format("HH:mm:ss");
+      var formattedStartTime = moment(dateVal + ' ' + formattedVal).format('"YYYY-MM-DD HH:mm:ssZ');
       value.start_time = formattedStartTime;
+
     }
     else if(type === 'end') {
-      var formattedEndTime = moment.utc(moment(value.editedEndTime)).format('HH:mm:ss');
+
+      var endDateVal = moment(value.start_time).format('"YYYY-MM-DD');
+      var formattedEndVal = moment(value.editedEndTime).format("HH:mm:ss");
+      var formattedEndTime = moment(endDateVal + ' ' + formattedEndVal).format('"YYYY-MM-DD HH:mm:ssZ');
       value.end_time = formattedEndTime;
     }
     

@@ -24,14 +24,14 @@
     </div>
 </div>
 
-<br /><br /><br /><br />
-<div class="center-area" ng-if="tags && tags.length > 0">
+<br />
+<div class="row" ng-if="tags && tags.length > 0">
     Tagged Items
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="col-lg-3 col-md-3 col-sm-3" ng-repeat="value in tags track by $index"><button ng-click="addTag(value.name)" class="btn btn-primary">{{value.title}}</button></div>
     </div>
 </div>
-<div class="center-area ">
+<div class="row">
     <div>
         <h2>Currently Tracking {{currentlyTracking.categoryName}}</h2><br />
         <timer interval="1000" ng-if="manualTime == false || manualEntryCompleted == false"><h1 class="large-timer">{{hours}} hour{{hoursS}}, <br />{{minutes}} minute{{minutesS}}, <br />{{seconds}} second{{secondsS}}.</h1></timer>

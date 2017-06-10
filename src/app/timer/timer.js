@@ -113,7 +113,7 @@ angular.module( 'ngBoilerplate.timer', [
 
   $scope.searchVal = "";
   $scope.searchText = function(added) {
-    if($scope.searchVal !== "") {
+    if($scope.searchVal && $scope.searchVal !== "") {
 
       $scope.showSearchResults = true;
       var frozenVal = _.clone($scope.searchVal);
@@ -135,6 +135,7 @@ angular.module( 'ngBoilerplate.timer', [
   
 
   $scope.addVal = function(frozenVal) {
+    $scope.showSearchResults = false;
     apiService.addCategoryTag(frozenVal, id).then(function(response) {
       _.remove($scope.searchResults, {name: frozenVal});
       response.title = response.name;
