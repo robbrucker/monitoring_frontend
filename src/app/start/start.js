@@ -19,7 +19,9 @@ angular.module( 'ngBoilerplate.start', [
 
 
 .controller( 'StartCtrl', function StartController( $scope, apiService, $rootScope, sessionService, $state) {
-
+  $scope.signupUser = function() {
+    $scope.wantsToSignUp = true;
+  };
   $scope.administrationMode = false;
   //login
   $scope.isUserLoggedIn = function() {
@@ -27,15 +29,6 @@ angular.module( 'ngBoilerplate.start', [
     console.log("Is the user logged in? ", $scope.loggedIn);
   };
   $scope.isUserLoggedIn();
-
-  $scope.createUser = function(user) {
-    apiService.createUser(user).then(function() {
-      $scope.wantsToSignUp = false;
-    });
-  };
-
-  //for submitting login
-  $scope.user = {};
 
   /**
    * Submit methods
@@ -53,10 +46,29 @@ angular.module( 'ngBoilerplate.start', [
 
     });
   };
+  $scope.createUser = function(user) {
+    apiService.createUser(user).then(function() {
+      $scope.user = user;
+      $scope.submitLogin();
+      $scope.wantsToSignUp = false;
+
+    });
+  };
+
+  //for submitting login
+  $scope.user = {};
+
+
+
+
+
   if(!$scope.loggedIn) {
     return;
   }
-
+  $scope.category = {};
+  apiService.getCategories().then(function(result) {
+    $scope.categories = result;
+  });
 
   $scope.getLastRecords = function() {
     apiService.getLastRecords().then(function(result) {
@@ -66,14 +78,12 @@ angular.module( 'ngBoilerplate.start', [
   $scope.getLastRecords();
 
   //for submitting categories
-  $scope.category = {};
+
 
   $scope.currentlyTrackingId = null;
   $scope.currentlyTrackingName = null;
 
-  apiService.getCategories().then(function(result) {
-    $scope.categories = result;
-  });
+
   
   $scope.submitCategory = function() {
     apiService.submitCategory($scope.category).then(function(result) {

@@ -3,116 +3,61 @@
             <input type="text" ng-model="user.email" placeholder="email" />
             <input type="password" ng-model="user.password" placeholder="password" />
             <button class="btn btn-primary" ng-click="submitLogin()">Login</button>
-            <button class="btn btn-primary" ng-click="wantsToSignUp = true">Sign up</button>
+            <button class="btn btn-primary" ng-click="signupUser()">Sign up</button>
             <div ng-if="error">Error logging in</div>
         </div>
 
-
-    <div ng-if="wantsToSignUp">
-        <input type="text" placeholder="name" ng-model="newUser.name" />
+    <div ng-if="wantsToSignUp == true">
+        <input type="text" placeholder="Your Name" ng-model="newUser.name" />
         <input type="text" placeholder="email" ng-model="newUser.email" />
         <input type="password" placeholder="password" ng-model="newUser.password" />
         <button ng-click="createUser(newUser)" class="btn btn-primary">Sign up</button>
     </div>
+
+
 </div>
-<div ng-if="loggedIn === true">
-    <header class="bar bar-nav">
-        <button ng-click="toggleAdminMode()" class="btn pull-left">
-            Administration
-        </button>
-        <button ng-click="logOutUser()" class="btn pull-right">
-            Logout
-        </button>
+<header class="bar bar-nav" ng-if="loggedIn === true">
+    <button ng-click="toggleAdminMode()" class="btn pull-left">
+        Administration
+    </button>
+    <button ng-click="logOutUser()" class="btn pull-right">
+        Logout
+    </button>
 
-    </header>    <br /><br />
+</header>    <br /><br />
 
-    <!--<div ng-if="lastRecord" class="last-record">-->
-        <!--<h1>Today:</h1>-->
-        <!--Last Record for {{lastRecord.currentlyTracking.categoryName}} on {{lastRecord.data.start_time  | date:'medium'}} ending on {{lastRecord.data.end_time  | date:'medium'}}-->
-       <!---->
-    <!--</div>-->
-
-    <br /><br />
+<div ng-if="loggedIn == true">
+    <div class="col-lg-12 col-md-12 col-sm-12" ng-if="categories.length == 0">
+        <p>Welcome to the monitoring app! To get started, please create a a few categories. When finished, click on the category name to start tracking. To add categories in the future, click Administration on the top toolbar.</p>
+        <br /><br />
+        <a href="#" name="individual-category">Create a new category</a>
+        <input ng-model = "category.name" type="text" />
+        <button class="btn btn-primary" ng-click="submitCategory()">Submit</button>
+    </div>
     <p ng-if="administrationMode">
         <a href="#" name="individual-category">Create a new category</a>
         <input ng-model = "category.name" type="text" />
         <button class="btn btn-primary" ng-click="submitCategory()">Submit</button>
     </p>
     <p>
-            <div class="center-area">
-    <ul class="table-view"  ng-repeat="value in categories track by value.id">
-        <button ng-click="startTracking(value.id, value.name)" class="table-view-cell btn btn-block"><h2>{{value.name}}</h2><br /><br />
-        </button>
+    <div ng-if="currentlyTracking != null && currentlyTracking.categoryId == value.id" class="col-lg-12 col-md-12 col-sm-12">
+        <h4>Currently Tracking {{currentlyTracking.categoryName}}</h4>
+        <timer interval="1000"><h1 class="large-timer">{{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}, {{seconds}} second{{secondsS}}.</h1></timer>
+        <button class="btn btn-warning" ng-click="stopTracking(currentlyTracking.id)">Stop Timer</button>
+    </div>
+    <div class="center-area">
+        <ul class="table-view"  ng-repeat="value in categories track by value.id">
+            <button ng-click="startTracking(value.id, value.name)" class="table-view-cell btn btn-block"><h2>{{value.name}}</h2><br /><br />
+            </button>
+        </ul>
 
-    </ul>
-
-
-
-                <!--<div class="col-lg-12 col-md-12 col-sm-12">-->
-                    <!--<div class="col-lg-3 col-md-3 col-sm-3">-->
-                       <!--<b>{{value.name}}</b>-->
-                        <!--<hr />-->
-                    <!--</div>-->
-                    <!--<div class="col-lg-3 col-md-3 col-sm-3">-->
-                        <!--&lt;!&ndash;<span ng-if="currentlyTracking && currentlyTracking.id">&ndash;&gt;-->
-                              <!--&lt;!&ndash;<button class="btn btn-warning" ng-click="stopTracking()">Stop Timer</button>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</span>&ndash;&gt;-->
-
-                             <!--<md-button class="btn btn-primary" ng-click="startTracking(value.id, value.name)">Start Tracking</md-button>-->
-                        <!--</span>-->
-
-                    <!--</div>-->
-                    <!--<div class="col-lg-3 col-md-3 col-sm-3">-->
-                        <!--<button class="btn btn-primary" ng-click="viewRecords(value.id)" ng-if="!categoryRecords">View Records</button>-->
-                        <!--<button class="btn btn-primary" ng-click="hideRecords()" ng-if="categoryRecords.id == value.id">Hide Records</button>-->
-                    <!--</div>-->
-                    <!--<div class="col-lg-3 col-md-3 col-sm-3">-->
-                        <!--<button class="btn btn-warning" ng-if="administrationMode" ng-click="removeCategory(value.id)">Remove</button>-->
-                    <!--</div>-->
-
-                <!--</div>-->
-                <div ng-if="currentlyTracking != null && currentlyTracking.categoryId == value.id" class="col-lg-12 col-md-12 col-sm-12">
-                    <h4>Currently Tracking {{currentlyTracking.categoryName}}</h4>
-                    <timer interval="1000"><h1 class="large-timer">{{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}, {{seconds}} second{{secondsS}}.</h1></timer>
-                    <button class="btn btn-warning" ng-click="stopTracking(currentlyTracking.id)">Stop Timer</button>
-
-                </div>
-
-                <hr />
-
-            </div>
+    </div>
     </p>
-
-    <!--<div class="col-lg-12">-->
-        <!--<div ng-repeat="value in lastRecords track by $index" class="col-md-3">-->
-            <!--<h1>{{value.category_name}}</h1><h1>{{value.total_time}}</h1>-->
-            <!--<span ng-if="value.start_time">-->
-                <!--<h3>Total Time: {{value.total_time}}</h3>-->
-                 <!--<h3>Start time: {{value.start_time | date:'medium'}}</h3>-->
-                <!--<br />-->
-                <!--<h3>End Time: {{value.end_time | date:'medium'}}</h3>-->
-            <!--</span>-->
-                <!--<span ng-if="!value.start_time">-->
-                <!--<h1>No Records</h1>-->
-            <!--</span>-->
-
-            <!--<br /><br />-->
-        <!--</div>-->
-
-    <!--</div>-->
-
 
 </div>
 
 
 <div ng-if="currentlyTracking == null && categoryRecords">
-    <!--<div class="col-lg-12 col-md-12 col-sm-12">-->
-        <!--<div class="col-lg-3 col-md-3 col-sm-3"><b>Start Time</b></div>-->
-        <!--<div class="col-lg-3 col-md-3 col-sm-3"><b>End Time</b></div>-->
-        <!--<div class="col-lg-3 col-md-3 col-sm-3"><b>Total Time</b></div>-->
-        <!--<div class="col-lg-3 col-md-3 col-sm-3"><b>Remove Record</b></div>-->
-        <!--<hr />-->
-    <!--</div>-->
 
     <div ng-repeat="value in categoryRecords.data track by $index" class="col-lg-12 col-md-12 col-sm-12">
         <hr />
@@ -125,32 +70,7 @@
     </p>
     </div>
 </div>
-<hr />
 
 <div ng-if="loggedIn">
 
 </div>
-
-
-<!--<nav class="bar bar-tab">-->
-    <!--<a class="tab-item active" href="#">-->
-        <!--<span class="icon icon-home"></span>-->
-        <!--<span class="tab-label">Home</span>-->
-    <!--</a>-->
-    <!--<a class="tab-item" href="#">-->
-        <!--<span class="icon icon-person"></span>-->
-        <!--<span class="tab-label">Profile</span>-->
-    <!--</a>-->
-    <!--<a class="tab-item" href="#">-->
-        <!--<span class="icon icon-star-filled"></span>-->
-        <!--<span class="tab-label">Favorites</span>-->
-    <!--</a>-->
-    <!--<a class="tab-item" href="#">-->
-        <!--<span class="icon icon-search"></span>-->
-        <!--<span class="tab-label">Search</span>-->
-    <!--</a>-->
-    <!--<a class="tab-item" href="#">-->
-        <!--<span class="icon icon-gear"></span>-->
-        <!--<span class="tab-label">Settings</span>-->
-    <!--</a>-->
-<!--</nav>-->
