@@ -19,70 +19,43 @@ angular.module( 'ngBoilerplate.last-records', [
 })
 
 
-.controller( 'LastRecordsCtrl', function LastRecordsController( $scope, apiService, $rootScope, sessionService, $state, moment, $stateParams) {
-
-  $scope.administrationMode = false;
-  $scope.viewingRecords = false;
-  $scope.editingStartVal = {};
-  $scope.editingEndVal = {};
+.controller( 'LastRecordsCtrl', function LastRecordsController( $scope, apiService, $rootScope, sessionService, $state, moment, $stateParams, timeService, lastRecordsService) {
+  $scope = lastRecordsService.initialize($scope);
+  
   //login
   $scope.isUserLoggedIn = function() {
     $scope.loggedIn = apiService.userLoggedIn() ? true : false;
-    console.log("Is the user logged in? ", $scope.loggedIn);
   };
   $scope.isUserLoggedIn();
 
-  $scope.createUser = function(user) {
-    apiService.createUser(user).then(function() {
-      $scope.wantsToSignUp = false;
-    });
+  $scope.goBack = function() {
+    $scope.categoryRecords = null;
   };
-
-  //for submitting login
-  $scope.user = {};
-
-  /**
-   * Submit methods
-   */
-  $scope.submitLogin = function() {
-    apiService.logInUser($scope.user).then(function(result) {
-      $state.go($state.current, {}, {reload: true});
-    });
-  };
-  if(!$scope.loggedIn) {
-    return;
-  }
-
-
   //for submitting categories
-  $scope.category = {};
 
-  apiService.getCategory().then(function(result) {
+
+  apiService.getCategories().then(function(result) {
     $scope.categories = result;
   });
 
   $scope.viewRecords = function(id, name) {
-    $scope.viewingRecords = true;
-    $scope.viewingRecord = {};
-    $scope.viewingRecord.name = name;
-    $scope.viewingRecord.id = id;
+   $scope = lastRecordsService.initializeViewCategoryRecords(id, name, $scope);
     apiService.getCategoryRecords(id).then(function(result) {
-      $scope.categoryRecords = {};
-      $scope.categoryRecords.data = result;
-      $scope.categoryRecords.id = id;
-      $scope.categoryRecords.name = name;
-
+      $scope = lastRecordsService.afterGetCategoryRecords(result, $scope);
     });
   };
 
 
   if($stateParams.category_id) {
+    
+    //TODO: Fix this to get category based off of 
     $scope.viewRecords(parseInt($stateParams.category_id, 10), 'test');
   }
 
 
   $scope.hideRecords = function() {
-    $scope.categoryRecords = null;
+    $scope = lastRecordsService.hideRecords($scope);
+
   };
   
   $scope.deleteEntry = function(id) {
@@ -105,35 +78,15 @@ angular.module( 'ngBoilerplate.last-records', [
     sessionService.logOutUser();
     $state.go($state.current, {}, {reload: true});
   };
-  
-  $scope.toggleAdminMode = function() {
-    $scope.administrationMode = !$scope.administrationMode;
-  };
 
-  $scope.editStartTime = function(value) {
-
-    $scope.editingStartVal[value.id] = true;
-
-  };
 
   $scope.editCategoryRecord = function(value, type) {
-
     if(type === 'start') {
-
-      var dateVal = moment(value.end_time).format('"YYYY-MM-DD');
-      var formattedVal = moment(value.editedStartTime).format("HH:mm:ss");
-      var formattedStartTime = moment(dateVal + ' ' + formattedVal).format('"YYYY-MM-DD HH:mm:ssZ');
-      value.start_time = formattedStartTime;
-
+      value.start_time = timeService.convertTime(value.end_time, value.editedStartTime, type);
     }
     else if(type === 'end') {
-
-      var endDateVal = moment(value.start_time).format('"YYYY-MM-DD');
-      var formattedEndVal = moment(value.editedEndTime).format("HH:mm:ss");
-      var formattedEndTime = moment(endDateVal + ' ' + formattedEndVal).format('"YYYY-MM-DD HH:mm:ssZ');
-      value.end_time = formattedEndTime;
+      value.end_time = timeService.convertTime(value.start_time, value.editedEndTime, type);
     }
-    
     apiService.editCategoryRecords(value).then(function() {
       if(type === 'start') {
         $scope.editingStartVal[value.id] = false;

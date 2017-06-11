@@ -177,7 +177,7 @@ angular.module( 'ngBoilerplate.timer', [
  $scope.showItemDisplay = function() {
    $scope.itemDisplay = true;
    if(!$scope.categories) {
-     apiService.getCategory().then(function(result) {
+     apiService.getCategories().then(function(result) {
        $scope.categories = result;
      });
    }

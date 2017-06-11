@@ -56,7 +56,7 @@ angular.module( 'ngBoilerplate.today-records', [
   //for submitting categories
   $scope.category = {};
 
-  apiService.getCategory().then(function(result) {
+  apiService.getCategories().then(function(result) {
     $scope.categories = result;
     _.each($scope.categories, function(category) {
       apiService.getTodaysRecords(category.id).then(function(result) {

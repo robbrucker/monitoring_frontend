@@ -71,7 +71,7 @@ angular.module( 'ngBoilerplate.start', [
   $scope.currentlyTrackingId = null;
   $scope.currentlyTrackingName = null;
 
-  apiService.getCategory().then(function(result) {
+  apiService.getCategories().then(function(result) {
     $scope.categories = result;
   });
   

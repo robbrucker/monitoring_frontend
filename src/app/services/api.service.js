@@ -29,7 +29,7 @@ app.factory('apiService', function($q, $http, $window, sessionService, environme
                return response.status === 401 ? false : response;
             });
         },
-        getCategory: function(category) {
+        getCategories: function(category) {
 
             var userId = sessionService.getUserId();
             if(userId) {

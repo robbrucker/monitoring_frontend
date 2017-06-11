@@ -1,19 +1,21 @@
 angular.module( 'ngBoilerplate', [
-  'templates-app',
-  'intecerceptor.service',
-    'session.service',
-  'templates-common',
-  'ngBoilerplate.home',
-  'ngBoilerplate.start',
-    'angularMoment',
-  'ngBoilerplate.timer',
-    'api.service',
-    'environment.service',
-  'ui.bootstrap',
-    'ngBoilerplate.last-records',
-    'ngBoilerplate.today-records',
-'timer',
-  'ui.router'
+        'templates-app',
+        'intecerceptor.service',
+        'session.service',
+        'templates-common',
+        'ngBoilerplate.home',
+        'ngBoilerplate.start',
+        'angularMoment',
+        'ngBoilerplate.timer',
+        'api.service',
+        'time.service',
+        'environment.service',
+        'last-records.service',
+        'ui.bootstrap',
+        'ngBoilerplate.last-records',
+        'ngBoilerplate.today-records',
+        'timer',
+        'ui.router'
 ])
 
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider ) {
