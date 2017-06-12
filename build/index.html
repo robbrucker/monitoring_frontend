@@ -10,12 +10,37 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="https://gitcdn.link/repo/angular/bower-material/master/angular-material.css">
 
-    <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
-    <link rel="stylesheet" type="text/css" href="<%= file %>" /><% }); %>
+    <!-- compiled CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/ngbp-0.3.2.css" />
     <link rel="stylesheet" type="text/css" href="assets/ratchet.css" />
     <link rel="stylesheet" type="text/css" href="assets/ratchet-theme-ios.css" />
-    <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
-    <script type="text/javascript" src="<%= file %>"></script><% }); %>
+    <!-- compiled JavaScript -->
+    <script type="text/javascript" src="vendor/angular/angular.js"></script>
+    <script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript" src="vendor/lodash/dist/lodash.js"></script>
+    <script type="text/javascript" src="vendor/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="vendor/moment/min/locales.min.js"></script>
+    <script type="text/javascript" src="vendor/humanize-duration/humanize-duration.js"></script>
+    <script type="text/javascript" src="vendor/angular-timer/dist/angular-timer.min.js"></script>
+    <script type="text/javascript" src="vendor/moment/moment.js"></script>
+    <script type="text/javascript" src="vendor/angular-moment/angular-moment.js"></script>
+    <script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap.js"></script>
+    <script type="text/javascript" src="src/app/app.js"></script>
+    <script type="text/javascript" src="src/app/home/home.js"></script>
+    <script type="text/javascript" src="src/app/last-records/last-records.js"></script>
+    <script type="text/javascript" src="src/app/services/api.service.js"></script>
+    <script type="text/javascript" src="src/app/services/environment.service.js"></script>
+    <script type="text/javascript" src="src/app/services/interceptor.service.js"></script>
+    <script type="text/javascript" src="src/app/services/session.service.js"></script>
+    <script type="text/javascript" src="src/app/services/time.service.js"></script>
+    <script type="text/javascript" src="src/app/services/views/last-records/last-records.service.js"></script>
+    <script type="text/javascript" src="src/app/start/start.js"></script>
+    <script type="text/javascript" src="src/app/timer/timer.js"></script>
+    <script type="text/javascript" src="src/app/today/today-records.js"></script>
+    <script type="text/javascript" src="src/common/plusOne/plusOne.js"></script>
+    <script type="text/javascript" src="templates-common.js"></script>
+    <script type="text/javascript" src="templates-app.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone.min.js"></script>
     <script src="https://use.fontawesome.com/d6d7c14c85.js"></script>
 
@@ -39,8 +64,8 @@
           <!--<div class="navbar-brand">-->
             <!--ngbp-->
             <!--<small>-->
-              <!--<a href="http://github.com/ngbp/ngbp/blob/v<%= version %>-release/CHANGELOG.md">-->
-                <!--v<%= version %>-->
+              <!--<a href="http://github.com/ngbp/ngbp/blob/v0.3.2-release/CHANGELOG.md">-->
+                <!--v0.3.2-->
               <!--</a>-->
             <!--</small>-->
           <!--</div>-->
